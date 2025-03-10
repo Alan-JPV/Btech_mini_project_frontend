@@ -1,0 +1,120 @@
+/* Layout */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    background: #f8f9fa;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    background: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4f46e5;
+    margin-bottom: 20px;
+  }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  nav ul li {
+    padding: 15px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+  }
+  
+  nav ul li:hover, .active {
+    background: black;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  /* Dashboard Content */
+  .dashboard-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  /* Header */
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  /* Stats */
+  .stats {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .stat-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .stat-change {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .up {
+    color: green;
+  }
+  
+  .down {
+    color: red;
+  }
+  
+  /* Actions */
+  .actions {
+    margin-top: 20px;
+  }
+  
+  .request-transfer {
+    background: black;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .update-status {
+    background: white;
+    padding: 10px 15px;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+  

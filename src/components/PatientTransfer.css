@@ -1,0 +1,134 @@
+/* Main Container */
+.patient-transfer-container {
+    padding: 20px;
+    background: #f8f9fa;
+  }
+  
+  /* Header */
+  .transfer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-info {
+    font-weight: bold;
+  }
+  
+  /* Patient Info */
+  .patient-info, .destination-hospital, .transfer-status, .communication {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .input-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .input-group input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .import-button {
+    background: black;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Hospital List */
+  .hospital {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .availability {
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  
+  .high {
+    background: #28a745;
+    color: white;
+  }
+  
+  .medium {
+    background: #ffc107;
+  }
+  
+  /* Transfer Status */
+  .status-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .active {
+    color: green;
+  }
+  
+  .in-progress {
+    color: orange;
+  }
+  
+  .pending {
+    color: gray;
+  }
+  
+  /* Communication Panel */
+  .chat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .message {
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 70%;
+  }
+  
+  .received {
+    background: #ddd;
+    align-self: flex-start;
+  }
+  
+  .sent {
+    background: black;
+    color: white;
+    align-self: flex-end;
+  }
+  
+  /* Buttons */
+  .transfer-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .submit-button {
+    background: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .draft-button {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    cursor: pointer;
+  }
+  

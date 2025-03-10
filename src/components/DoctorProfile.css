@@ -1,0 +1,147 @@
+/* Container */
+.doctor-profile-container {
+    padding: 20px;
+    background: #f8f9fa;
+  }
+  
+  /* Header */
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .logout-button {
+    background: black;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Profile Card */
+  .profile-card {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .profile-avatar {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .profile-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  
+  .edit-avatar {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Personal Information */
+  .profile-section {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .info-group p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .info-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Settings */
+  .settings-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .password-button, .update-button {
+    background: black;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .notification-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  /* Specializations */
+  .specializations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .specialty {
+    background: #ddd;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .add-specialty {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  /* Action Buttons */
+  .profile-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .cancel-button {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .save-button {
+    background: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  

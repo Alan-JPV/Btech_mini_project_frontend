@@ -1,0 +1,129 @@
+/* Main Container */
+.resource-monitor-container {
+    padding: 20px;
+    background: #f8f9fa;
+    display: grid;
+    gap: 20px;
+  }
+  
+  /* Header */
+  .resource-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .refresh-button {
+    background: black;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Filters */
+  .filters {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .filters select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Emergency Resources */
+  .emergency-resources {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .map-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .resource-cards {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .resource-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .resource-card.available {
+    background: #d4edda;
+  }
+  
+  .resource-card.critical {
+    background: #f8d7da;
+  }
+  
+  /* Hospital List */
+  .hospital-list {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .hospital-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .hospital-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .availability {
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  
+  .high {
+    background: #28a745;
+    color: white;
+  }
+  
+  .medium {
+    background: #ffc107;
+  }
+  
+  /* Resource Details */
+  .resource-details {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .contact-button {
+    background: black;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
