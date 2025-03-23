@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -6,21 +7,12 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      {/* Logo */}
-      <div className="logo">LOGO</div>
+      {/* Clickable Logo - Redirects to Dashboard */}
+      <Link to="/dashboard" className="logo">LOGO</Link>
 
-      {/* Navigation Links */}
-      <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Patients</a></li>
-        <li><a href="#">Transfers</a></li>
-        <li><a href="#">Settings</a></li>
-      </ul>
-
-      {/* Right Icons */}
+      {/* Right Section */}
       <div className="nav-icons">
-        <span className="notification-icon">🔔</span>
-        <span className="user-avatar">👨‍⚕️</span>
+        <button className="profile-button"><Link to="/profile" className="profile-button">👤 Profile</Link></button> {/* Styled Profile Link */}
         <button className="logout-button">Logout</button>
       </div>
 

@@ -16,12 +16,6 @@ const Login = () => {
             <label>Password</label>
             <input type="password" placeholder="Enter your password" />
           </div>
-          <div className="options">
-            <label>
-              <input type="checkbox" /> Remember me
-            </label>
-            <a href="#">Forgot password?</a>
-          </div>
           <button className="sign-in-btn">Sign in</button>
           <button className="register-btn">Register</button>
         </form>
@@ -31,3 +25,4 @@ const Login = () => {
 };
 
 export default Login;
+

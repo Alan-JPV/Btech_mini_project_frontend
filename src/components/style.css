@@ -1,0 +1,164 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+  }
+  
+  .title {
+    text-align: left;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+  
+  .hospital-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .grid {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+  }
+  
+  .stat {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .green {
+    background: #d4edda;
+    color: #155724;
+  }
+  
+  .blue {
+    background: #cce5ff;
+    color: #004085;
+  }
+  
+  .red {
+    background: #f8d7da;
+    color: #721c24;
+  }
+  
+  .updated-time {
+    font-size: 14px;
+    color: #666;
+    margin-top: 15px;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px 20px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar button {
+    padding: 8px 12px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .profile-btn {
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  
+  .logout-btn {
+    background: black;
+    color: white;
+  }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+  }
+  
+  .modal-content ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .modal-content ul li {
+    padding: 8px;
+    cursor: pointer;
+    background: #f0f0f0;
+    margin: 5px 0;
+    border-radius: 5px;
+  }
+  
+  .modal-content ul li:hover {
+    background: #ddd;
+  }
+  .details-section {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
+  .details-section h3 {
+    margin-bottom: 8px;
+  }
+  
+  .details-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .details-section ul li {
+    padding: 6px;
+    cursor: pointer;
+    background: #e6e6e6;
+    margin: 5px 0;
+    border-radius: 5px;
+  }
+  
+  .details-section ul li:hover {
+    background: #d4d4d4;
+  }
+  
+  
+  

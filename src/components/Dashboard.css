@@ -117,4 +117,8 @@
     border: 1px solid black;
     cursor: pointer;
   }
-  
+  .pova
+  {
+    text-decoration: none;
+    color: #4d16b3;
+  }

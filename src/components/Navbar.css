@@ -1,76 +1,106 @@
 /* Navbar Container */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    padding: 15px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
-  
-  /* Logo */
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  /* Navigation Links */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Logo (Now Clickable Without Underline) */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;  /* Removes underline */
+  color: rgb(46, 97, 207);  /* Ensures a clean look */
+  transition: color 0.3s ease;
+}
+
+.logo:hover {
+  color: #007bff;  /* Changes color on hover */
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #007bff;
+}
+
+/* Right Icons */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Removed Notification Bell Icon */
+
+/* Styled Profile Link (Replaced Avatar Icon) */
+.profile-link {
+  text-decoration: none;
+  color: white;
+  background-color: #007bff; /* Blue color */
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.profile-link:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Logout Button */
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  text-decoration: none !important; /* Ensure underline is removed */
+  color: rgb(255, 255, 255); 
+  font-weight: 500;
+  padding: 13px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  text-decoration: none !important; /* Ensure underline is removed */
+  color: black; 
+  font-weight: 500;
+  padding: 5px 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+/* Mobile Menu Button */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .nav-links {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-  }
-  
-  .nav-links li a {
-    text-decoration: none;
-    color: black;
-    font-weight: 500;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-links li a:hover {
-    color: #007bff;
-  }
-  
-  /* Right Icons */
-  .nav-icons {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .notification-icon {
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
-  
-  .user-avatar {
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  .logout-button {
-    background: black;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  /* Mobile Menu Button */
-  .menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .nav-links {
       display: none;
       position: absolute;
       top: 60px;
@@ -79,14 +109,13 @@
       background: white;
       flex-direction: column;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-  
-    .nav-links.open {
-      display: flex;
-    }
-  
-    .menu-toggle {
-      display: block;
-    }
   }
-  
+
+  .nav-links.open {
+      display: flex;
+  }
+
+  .menu-toggle {
+      display: block;
+  }
+}
