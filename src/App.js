@@ -7,7 +7,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ResourceMonitor from "./components/ResourceMonitor";
 import PatientTransfer from "./components/PatientTransfer";
-import DoctorProfile from "./components/DoctorProfile";
+import ProfilePage from "./components/DoctorProfile";
 import Navbar from "./components/Navbar";
 import firebaseApp from "./firebaseConfig"; // Ensure you have a Firebase config file
 
@@ -61,7 +61,7 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoute>
-              <DoctorProfile />
+              <ProfilePage />
             </ProtectedRoute>
           }
         />

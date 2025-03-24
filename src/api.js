@@ -1,29 +1,24 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+const API_BASE_URL = process.env.VITE_BACKEND_URL || "http://localhost:5000";
 
-// Get all hospitals data
-export const fetchHospitals = async (token) => {
+// 🔹 Debugging to check if API base URL is correct
+console.log("🔹 API Base URL:", API_BASE_URL);
+
+// Fetch central hospital data
+export const fetchCentralData = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/hospitals`, {
-      headers: { Authorization: `Bearer ${token}` },
+    const token = localStorage.getItem("token"); // ✅ Fetch token from storage
+    console.log("🔹 FRONTEND: Sending Token to /api/central-data:", token); // ✅ Debugging
+
+    const response = await axios.get(`${API_BASE_URL}/api/central-data`, {
+      headers: { Authorization: `Bearer ${token}` }, // ✅ Ensure token is sent
     });
+
+    console.log("✅ FRONTEND: Data received from /api/central-data:", response.data); // ✅ Debugging
     return response.data;
   } catch (error) {
-    console.error("Error fetching hospitals:", error);
-    return null;
-  }
-};
-
-// Sync data between hospitals
-export const syncData = async (token) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/api/sync`, {}, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error syncing data:", error);
+    console.error("❌ FRONTEND: Error fetching central data:", error.response?.data || error.message);
     return null;
   }
 };

@@ -1,82 +1,217 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { auth } from "../firebaseConfig"; // Firebase Config
+import axios from "axios";
 import "./DoctorProfile.css";
 
-const DoctorProfile = () => {
-  const [email, setEmail] = useState("james.wilson@hospital.com");
-  const [phone, setPhone] = useState("+1 (555) 123-4567");
-  const [address, setAddress] = useState("123 Medical Center Dr, Suite 456");
-  const [notifications, setNotifications] = useState(false);
+const ProfilePage = () => {
+  const [firebaseUser, setFirebaseUser] = useState(null);
+  const [profileData, setProfileData] = useState({
+    contact: "",
+    specialization: "",
+    hospitalName: "",
+    profileImage: ""
+  });
+  const [loading, setLoading] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // List of specializations for the dropdown
+  const specializations = [
+    "Cardiology",
+    "Neurology",
+    "Pediatrics",
+    "Orthopedics",
+    "Dermatology",
+    "Oncology",
+    "General Surgery",
+    "Psychiatry",
+    "Other"
+  ];
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setFirebaseUser(user);
+        
+        try {
+          const response = await axios.get(`http://localhost:5000/api/profile/${user.email}`);
+          if (response.data) {
+            setProfileData(response.data);
+          }
+        } catch (error) {
+          console.error("No extra details found, user might be new:", error.response?.data || error.message);
+        }
+
+        try {
+          const token = await user.getIdToken();
+          const userInfoResponse = await axios.post("http://localhost:5000/api/userinfo", null, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          if (userInfoResponse.data) {
+            setProfileData((prev) => ({
+              ...prev,
+              contact: userInfoResponse.data.contactInfo || prev.contact,
+              hospitalName: userInfoResponse.data.hospitalName || prev.hospitalName,
+              profileImage: userInfoResponse.data.profileImage || prev.profileImage,
+              name: userInfoResponse.data.name || user.displayName,
+            }));
+            console.log("Profile Image URL from UserInfo:", userInfoResponse.data.profileImage);
+          }
+        } catch (error) {
+          console.error("Error fetching UserInfo:", error.response?.data || error.message);
+        }
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  const handleChange = (e) => {
+    setProfileData({ ...profileData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const updatedProfile = {
+      email: firebaseUser.email,
+      name: firebaseUser.displayName,
+      profileImage: profileData.profileImage,
+      contact: profileData.contact,
+      specialization: profileData.specialization,
+      hospitalName: profileData.hospitalName,
+    };
+
+    const token = await firebaseUser.getIdToken();
+
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      try {
+        const uploadResponse = await axios.post("http://localhost:5000/api/upload-profile-image", formData, {
+          headers: { 
+            "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        updatedProfile.profileImage = uploadResponse.data.imageUrl;
+        console.log("Uploaded Image URL:", uploadResponse.data.imageUrl);
+      } catch (error) {
+        console.error("Error uploading image:", error.response?.data || error.message);
+        alert("Failed to upload image. Please try again.");
+        return;
+      }
+    }
+
+    try {
+      const putResponse = await axios.put("http://localhost:5000/api/userinfo", {
+        email: firebaseUser.email,
+        name: updatedProfile.name,
+        contactInfo: updatedProfile.contact,
+        hospitalName: updatedProfile.hospitalName,
+        profileImage: updatedProfile.profileImage,
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const updatedUser = putResponse.data.user;
+      setProfileData((prev) => ({
+        ...prev,
+        contact: updatedUser.contactInfo || prev.contact,
+        hospitalName: updatedUser.hospitalName || prev.hospitalName,
+        profileImage: updatedUser.profileImage || prev.profileImage,
+        name: updatedUser.name || prev.name,
+      }));
+
+      console.log("Updated Profile Image URL:", updatedUser.profileImage);
+
+      alert("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile:", error.response?.data || error.message);
+      alert(`Failed to update profile: ${error.response?.data?.message || error.message}. Please try again.`);
+    }
+  };
+
+  if (loading) return <h2>Loading...</h2>;
 
   return (
-    <div className="doctor-profile-container">
-      {/* Header */}
-      <header className="profile-header">
-        <div className="logo">LOGO</div>
-        <div className="user-actions">
-          <span className="notification-icon">🔔</span>
-          <span className="user-avatar">👨‍⚕️</span>
-          <button className="logout-button">Logout</button>
-        </div>
-      </header>
-
-      {/* Profile Section */}
-      <div className="profile-card">
-        <div className="profile-avatar">
-          <img src="https://via.placeholder.com/100" alt="Doctor" />
-          <button className="edit-avatar">🔒</button>
-        </div>
-        <h2>Dr. James Wilson</h2>
-        <p>Senior Cardiologist</p>
+    <div className="profile-container">
+      <div className="profile-header">
+        <img 
+          src={profileData.profileImage || firebaseUser?.photoURL || "/default-avatar.png"} 
+          alt="Profile" 
+          className="profile-image" 
+          onError={(e) => console.error("Failed to load profile image:", profileData.profileImage)}
+        />
+        <h2>Dr. {firebaseUser?.displayName}</h2>
+        <p>{profileData.specialization || "Specialization not set"}</p>
       </div>
 
-      {/* Personal Information */}
       <div className="profile-section">
         <h3>Personal Information</h3>
-        <div className="info-group">
-          <p>📧 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /></p>
-          <p>📞 <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} /></p>
-          <p>📍 <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} /></p>
-        </div>
+        <p>Email: {firebaseUser?.email}</p>
+        <p>Contact: {profileData.contact || "Not provided"}</p>
       </div>
 
-      {/* Settings */}
       <div className="profile-section">
-        <h3>Settings</h3>
-        <div className="settings-group">
-          <button className="password-button">Change Password</button>
-          <button className="update-button">Update</button>
-        </div>
-        <label className="notification-toggle">
-          <span>Notifications</span>
-          <input type="checkbox" checked={notifications} onChange={() => setNotifications(!notifications)} />
-        </label>
+        <h3>Hospital Affiliation</h3>
+        <p>{profileData.hospitalName || "Not provided"}</p>
       </div>
 
-      {/* Professional Details */}
       <div className="profile-section">
-        <h3>Professional Details</h3>
-        <div>
-          <h4>Hospital Affiliations</h4>
-          <p>✅ Central Hospital Medical Center (Primary)</p>
-          <p>✅ St. Mary's Medical Center (Secondary)</p>
-        </div>
+        <h3>Edit Profile</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Profile Image:</label>
+            <input type="file" onChange={handleFileChange} />
+          </div>
 
-        <div className="specializations">
-          <h4>Specializations</h4>
-          <span className="specialty">Cardiology</span>
-          <span className="specialty">Interventional Cardiology</span>
-          <span className="specialty">Echocardiography</span>
-          <button className="add-specialty">+ Add More</button>
-        </div>
-      </div>
+          <div className="form-group">
+            <label>Contact:</label>
+            <input 
+              type="text" 
+              name="contact" 
+              value={profileData.contact} 
+              onChange={handleChange} 
+              required 
+            />
+          </div>
 
-      {/* Action Buttons */}
-      <div className="profile-buttons">
-        <button className="cancel-button">Cancel</button>
-        <button className="save-button">Save Changes</button>
+          <div className="form-group">
+            <label>Specialization:</label>
+            <select
+              name="specialization"
+              value={profileData.specialization}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Specialization</option>
+              {specializations.map((spec) => (
+                <option key={spec} value={spec}>
+                  {spec}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Hospital Name:</label>
+            <input 
+              type="text" 
+              name="hospitalName" 
+              value={profileData.hospitalName} 
+              onChange={handleChange} 
+              required 
+            />
+          </div>
+
+          <button type="submit" className="save-button">Save Profile</button>
+        </form>
       </div>
     </div>
   );
 };
 
-export default DoctorProfile;
+export default ProfilePage;

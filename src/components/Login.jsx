@@ -4,8 +4,7 @@ import { auth } from "../firebaseConfig"; // Firebase auth
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
-  sendPasswordResetEmail,
-  getIdToken
+  sendPasswordResetEmail
 } from "firebase/auth";
 import axios from "axios"; // Axios for API requests
 import "./Login.css";
@@ -40,16 +39,25 @@ const Login = () => {
       const user = userCredential.user;
       const token = await user.getIdToken(); // Get Firebase token
 
-      // 🔹 Send token to backend for authentication & MongoDB storage
+      console.log("🔹 FRONTEND: Generated Token:", token); // ✅ Debugging
+
+      localStorage.setItem("token", token);
+
       const response = await axios.post("http://localhost:5000/api/auth/login", {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      localStorage.setItem("user", JSON.stringify(response.data.user)); // Store user info
+      console.log("✅ FRONTEND: Backend Response:", response.data); // ✅ Debugging
+
+      // 🔹 FIXED: Prevent crash by ensuring response structure
+      const userData = response.data?.user || {}; // ✅ Default empty object
+
+      localStorage.setItem("user", JSON.stringify(userData)); 
       navigate("/dashboard"); 
 
     } catch (err) {
-      setError(err.message);
+      console.error("❌ FRONTEND: Login Error:", err);
+      setError(err.response?.data?.error || "Something went wrong. Try again.");
     }
   };
 
@@ -69,7 +77,6 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <div className="logo">LOGO</div>
         <h3 className="welcome-text">{isRegistering ? "Register" : "Welcome Back"}</h3>
         {error && <p className="error-text">{error}</p>}
         {message && <p className="success-text">{message}</p>}

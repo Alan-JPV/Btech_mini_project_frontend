@@ -70,9 +70,10 @@
   align-items: center;
   gap: 8px; /* Space between icon and text */
   text-decoration: none !important; /* Ensure underline is removed */
-  color: rgb(255, 255, 255); 
+  color: rgb(13, 14, 16); 
+  background-color: rgb(148, 161, 203);
   font-weight: 500;
-  padding: 13px 12px;
+  padding: 8px 12px;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }

@@ -1,147 +1,106 @@
-/* Container */
-.doctor-profile-container {
-    padding: 20px;
-    background: #f8f9fa;
-  }
-  
-  /* Header */
-  .profile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    padding: 15px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .logout-button {
-    background: black;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  /* Profile Card */
-  .profile-card {
-    text-align: center;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-  }
-  
-  .profile-avatar {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .profile-avatar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
-  
-  .edit-avatar {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background: black;
-    color: white;
-    border-radius: 50%;
-    padding: 5px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  /* Personal Information */
-  .profile-section {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-  }
-  
-  .info-group p {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .info-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  /* Settings */
-  .settings-group {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .password-button, .update-button {
-    background: black;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .notification-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  /* Specializations */
-  .specializations {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  
-  .specialty {
-    background: #ddd;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-  
-  .add-specialty {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  /* Action Buttons */
-  .profile-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .cancel-button {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .save-button {
-    background: black;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-  }
-  
+/* DoctorProfile.css */
+.profile-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+  margin-bottom: 15px;
+}
+
+.profile-header h2 {
+  font-size: 24px;
+  color: #333;
+  margin: 10px 0;
+}
+
+.profile-header p {
+  font-size: 16px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.profile-section {
+  margin-bottom: 30px;
+}
+
+.profile-section h3 {
+  font-size: 18px;
+  color: #007bff;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+.profile-section p {
+  font-size: 16px;
+  color: #333;
+  margin: 8px 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.form-group select {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.save-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #0056b3;
+}
