@@ -6,6 +6,7 @@ import "./DoctorProfile.css";
 const ProfilePage = () => {
   const [firebaseUser, setFirebaseUser] = useState(null);
   const [profileData, setProfileData] = useState({
+    name: "",
     contact: "",
     specialization: "",
     hospitalName: "",
@@ -28,10 +29,12 @@ const ProfilePage = () => {
   ];
 
   useEffect(() => {
+    // Check Firebase Authentication
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         setFirebaseUser(user);
         
+        // Fetch additional details from MongoDB using email instead of UID
         try {
           const response = await axios.get(`http://localhost:5000/api/profile/${user.email}`);
           if (response.data) {
@@ -41,6 +44,7 @@ const ProfilePage = () => {
           console.error("No extra details found, user might be new:", error.response?.data || error.message);
         }
 
+        // Fetch existing UserInfo data
         try {
           const token = await user.getIdToken();
           const userInfoResponse = await axios.post("http://localhost:5000/api/userinfo", null, {
@@ -49,10 +53,11 @@ const ProfilePage = () => {
           if (userInfoResponse.data) {
             setProfileData((prev) => ({
               ...prev,
+              name: userInfoResponse.data.name || user.displayName || "",
               contact: userInfoResponse.data.contactInfo || prev.contact,
               hospitalName: userInfoResponse.data.hospitalName || prev.hospitalName,
               profileImage: userInfoResponse.data.profileImage || prev.profileImage,
-              name: userInfoResponse.data.name || user.displayName,
+              specialization: userInfoResponse.data.specialization || prev.specialization, // Add specialization
             }));
             console.log("Profile Image URL from UserInfo:", userInfoResponse.data.profileImage);
           }
@@ -77,10 +82,10 @@ const ProfilePage = () => {
     
     const updatedProfile = {
       email: firebaseUser.email,
-      name: firebaseUser.displayName,
+      name: profileData.name,
       profileImage: profileData.profileImage,
       contact: profileData.contact,
-      specialization: profileData.specialization,
+      specialization: profileData.specialization, // Ensure specialization is included
       hospitalName: profileData.hospitalName,
     };
 
@@ -106,23 +111,27 @@ const ProfilePage = () => {
     }
 
     try {
+      // Update UserInfo database via PUT request
       const putResponse = await axios.put("http://localhost:5000/api/userinfo", {
         email: firebaseUser.email,
         name: updatedProfile.name,
         contactInfo: updatedProfile.contact,
         hospitalName: updatedProfile.hospitalName,
         profileImage: updatedProfile.profileImage,
+        specialization: updatedProfile.specialization, // Add specialization
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
+      // Update local state with the response from the server
       const updatedUser = putResponse.data.user;
       setProfileData((prev) => ({
         ...prev,
+        name: updatedUser.name || prev.name,
         contact: updatedUser.contactInfo || prev.contact,
         hospitalName: updatedUser.hospitalName || prev.hospitalName,
         profileImage: updatedUser.profileImage || prev.profileImage,
-        name: updatedUser.name || prev.name,
+        specialization: updatedUser.specialization || prev.specialization, // Update specialization in state
       }));
 
       console.log("Updated Profile Image URL:", updatedUser.profileImage);
@@ -145,7 +154,7 @@ const ProfilePage = () => {
           className="profile-image" 
           onError={(e) => console.error("Failed to load profile image:", profileData.profileImage)}
         />
-        <h2>Dr. {firebaseUser?.displayName}</h2>
+        <h2>Dr. {profileData.name || firebaseUser?.displayName || "Unknown"}</h2>
         <p>{profileData.specialization || "Specialization not set"}</p>
       </div>
 
@@ -163,6 +172,17 @@ const ProfilePage = () => {
       <div className="profile-section">
         <h3>Edit Profile</h3>
         <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Doctor Name:</label>
+            <input 
+              type="text" 
+              name="name" 
+              value={profileData.name} 
+              onChange={handleChange} 
+              required 
+            />
+          </div>
+
           <div className="form-group">
             <label>Profile Image:</label>
             <input type="file" onChange={handleFileChange} />

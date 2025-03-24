@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { auth } from "../firebaseConfig";
-import "./PatientTransfer.css";
+import "./ResourceBooking.css";
 
-const PatientTransfer = () => {
+const ResourceBooking = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Get hospital and service from navigation state (passed from Dashboard)
-  const { hospitalName = "", service = "" } = location.state || {};
+  // Get hospital, resource type, and specific resource from navigation state
+  const { hospitalName = "", resourceType = "", resource = "" } = location.state || {};
 
   const [doctorDetails, setDoctorDetails] = useState({
     name: "",
@@ -17,7 +17,7 @@ const PatientTransfer = () => {
     hospitalName: "",
     specialization: "",
   });
-  const [patients, setPatients] = useState([{ name: "", age: "", height: "" }]);
+  const [bookings, setBookings] = useState([{ resource: resource || "", quantity: "" }]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -45,66 +45,66 @@ const PatientTransfer = () => {
     });
   }, []);
 
-  const handlePatientChange = (index, field, value) => {
-    const updatedPatients = [...patients];
-    updatedPatients[index][field] = value;
-    setPatients(updatedPatients);
+  const handleBookingChange = (index, field, value) => {
+    const updatedBookings = [...bookings];
+    updatedBookings[index][field] = value;
+    setBookings(updatedBookings);
   };
 
-  const addPatient = () => {
-    setPatients([...patients, { name: "", age: "", height: "" }]);
+  const addBooking = () => {
+    setBookings([...bookings, { resource: "", quantity: "" }]);
   };
 
-  const removePatient = (index) => {
-    if (patients.length > 1) {
-      setPatients(patients.filter((_, i) => i !== index));
+  const removeBooking = (index) => {
+    if (bookings.length > 1) {
+      setBookings(bookings.filter((_, i) => i !== index));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate patient details
-    for (const patient of patients) {
-      if (!patient.name || !patient.age || !patient.height) {
-        alert("Please fill in all patient details.");
+    // Validate booking details
+    for (const booking of bookings) {
+      if (!booking.resource || !booking.quantity || booking.quantity <= 0) {
+        alert("Please fill in all booking details with a valid quantity.");
         return;
       }
     }
 
-    const transferData = {
+    const bookingData = {
       hospitalName,
-      service,
+      resourceType,
       doctor: doctorDetails,
-      patients,
-      transferDate: new Date().toISOString(),
+      bookings,
+      bookingDate: new Date().toISOString(),
     };
 
     try {
       const token = await auth.currentUser.getIdToken();
-      await axios.post("http://localhost:5000/api/patient-transfer", transferData, {
+      await axios.post("http://localhost:5000/api/resource-booking", bookingData, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      alert("Patient transfer request submitted successfully!");
-      navigate("/dashboard"); // Redirect back to dashboard
+      alert("Resource booking request submitted successfully!");
+      navigate("/dashboard");
     } catch (error) {
-      console.error("Error submitting transfer:", error.response?.data || error.message);
-      alert(`Failed to submit transfer: ${error.response?.data?.message || error.message}`);
+      console.error("Error submitting booking:", error.response?.data || error.message);
+      alert(`Failed to submit booking: ${error.response?.data?.message || error.message}`);
     }
   };
 
   if (loading) return <h2>Loading...</h2>;
 
   return (
-    <div className="transfer-container">
-      <h2>Patient Transfer Request</h2>
-      <div className="transfer-section">
-        <h3>Transfer Details</h3>
+    <div className="booking-container">
+      <h2>Resource Booking Request</h2>
+      <div className="booking-section">
+        <h3>Booking Details</h3>
         <p><strong>Hospital:</strong> {hospitalName}</p>
-        <p><strong>Service:</strong> {service}</p>
+        <p><strong>Resource Type:</strong> {resourceType}</p>
       </div>
 
-      <div className="transfer-section">
+      <div className="booking-section">
         <h3>Doctor Details</h3>
         <p><strong>Name:</strong> Dr. {doctorDetails.name}</p>
         <p><strong>Contact:</strong> {doctorDetails.contact}</p>
@@ -112,58 +112,52 @@ const PatientTransfer = () => {
         <p><strong>Specialization:</strong> {doctorDetails.specialization}</p>
       </div>
 
-      <div className="transfer-section">
-        <h3>Patient Details</h3>
-        {patients.map((patient, index) => (
-          <div key={index} className="patient-form">
+      <div className="booking-section">
+        <h3>Resource Booking</h3>
+        {bookings.map((booking, index) => (
+          <div key={index} className="booking-form">
             <div className="form-group">
-              <label>Name:</label>
+              <label>Resource:</label>
               <input
                 type="text"
-                value={patient.name}
-                onChange={(e) => handlePatientChange(index, "name", e.target.value)}
+                value={booking.resource}
+                onChange={(e) => handleBookingChange(index, "resource", e.target.value)}
+                placeholder="e.g., Ventilator or A+ Blood"
                 required
+                disabled={index === 0 && resource} // Disable if pre-filled from dashboard
               />
             </div>
             <div className="form-group">
-              <label>Age:</label>
+              <label>Quantity:</label>
               <input
                 type="number"
-                value={patient.age}
-                onChange={(e) => handlePatientChange(index, "age", e.target.value)}
+                value={booking.quantity}
+                onChange={(e) => handleBookingChange(index, "quantity", e.target.value)}
+                min="1"
                 required
               />
             </div>
-            <div className="form-group">
-              <label>Height (cm):</label>
-              <input
-                type="number"
-                value={patient.height}
-                onChange={(e) => handlePatientChange(index, "height", e.target.value)}
-                required
-              />
-            </div>
-            {patients.length > 1 && (
+            {bookings.length > 1 && (
               <button
                 type="button"
                 className="remove-button"
-                onClick={() => removePatient(index)}
+                onClick={() => removeBooking(index)}
               >
                 Remove
               </button>
             )}
           </div>
         ))}
-        <button type="button" className="add-button" onClick={addPatient}>
-          Add Another Patient
+        <button type="button" className="add-button" onClick={addBooking}>
+          Add Another Resource
         </button>
       </div>
 
       <button type="submit" className="submit-button" onClick={handleSubmit}>
-        Submit Transfer Request
+        Submit Booking Request
       </button>
     </div>
   );
 };
 
-export default PatientTransfer;
+export default ResourceBooking;

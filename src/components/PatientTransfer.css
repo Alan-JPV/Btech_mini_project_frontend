@@ -1,134 +1,114 @@
-/* Main Container */
-.patient-transfer-container {
-    padding: 20px;
-    background: #f8f9fa;
-  }
-  
-  /* Header */
-  .transfer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-    padding: 15px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-info {
-    font-weight: bold;
-  }
-  
-  /* Patient Info */
-  .patient-info, .destination-hospital, .transfer-status, .communication {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-  }
-  
-  .input-group {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .input-group input, textarea, select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .import-button {
-    background: black;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  /* Hospital List */
-  .hospital {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .availability {
-    padding: 5px 10px;
-    border-radius: 4px;
-  }
-  
-  .high {
-    background: #28a745;
-    color: white;
-  }
-  
-  .medium {
-    background: #ffc107;
-  }
-  
-  /* Transfer Status */
-  .status-item {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .active {
-    color: green;
-  }
-  
-  .in-progress {
-    color: orange;
-  }
-  
-  .pending {
-    color: gray;
-  }
-  
-  /* Communication Panel */
-  .chat {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .message {
-    padding: 10px;
-    border-radius: 8px;
-    max-width: 70%;
-  }
-  
-  .received {
-    background: #ddd;
-    align-self: flex-start;
-  }
-  
-  .sent {
-    background: black;
-    color: white;
-    align-self: flex-end;
-  }
-  
-  /* Buttons */
-  .transfer-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .submit-button {
-    background: black;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .draft-button {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
+.transfer-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.transfer-container h2 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.transfer-section {
+  margin-bottom: 30px;
+}
+
+.transfer-section h3 {
+  font-size: 18px;
+  color: #007bff;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+.transfer-section p {
+  font-size: 16px;
+  color: #333;
+  margin: 8px 0;
+}
+
+.patient-form {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.add-button,
+.remove-button,
+.submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button {
+  background-color: #28a745;
+  color: #fff;
+  margin: 10px 0;
+}
+
+.add-button:hover {
+  background-color: #218838;
+}
+
+.remove-button {
+  background-color: #dc3545;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.remove-button:hover {
+  background-color: #c82333;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}

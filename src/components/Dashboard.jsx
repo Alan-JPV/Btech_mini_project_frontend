@@ -6,7 +6,7 @@ import "./style.css";
 const Dashboard = () => {
   const [hospitals, setHospitals] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [expandedSections, setExpandedSections] = useState({}); // ✅ Use an object instead of a single state
+  const [expandedSections, setExpandedSections] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,12 +37,16 @@ const Dashboard = () => {
   const toggleSection = (hospitalId, section) => {
     setExpandedSections((prevState) => ({
       ...prevState,
-      [hospitalId]: prevState[hospitalId] === section ? null : section, // ✅ Toggle per hospital
+      [hospitalId]: prevState[hospitalId] === section ? null : section,
     }));
   };
 
-  const handleRedirect = () => {
-    navigate("/transfer");
+  const handleTransfer = (hospitalName, service) => {
+    navigate("/transfer", { state: { hospitalName, service } });
+  };
+
+  const handleBooking = (hospitalName, resourceType, resource) => {
+    navigate("/booking", { state: { hospitalName, resourceType, resource } });
   };
 
   return (
@@ -75,7 +79,13 @@ const Dashboard = () => {
                 <h3>Bed Availability</h3>
                 <ul>
                   {Object.entries(hospital.beds).map(([key, value]) => (
-                    <li key={key} onClick={handleRedirect}>{key.replace("_", " ")}: {value}</li>
+                    <li
+                      key={key}
+                      onClick={() => handleTransfer(hospital.name, key.replace("_", " "))}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {key.replace("_", " ")}: {value}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -86,7 +96,13 @@ const Dashboard = () => {
                 <h3>Equipment Status</h3>
                 <ul>
                   {Object.entries(hospital.equipment).map(([key, value]) => (
-                    <li key={key} onClick={handleRedirect}>{key.replace("_", " ")}: {value}</li>
+                    <li
+                      key={key}
+                      onClick={() => handleBooking(hospital.name, "Equipment Ready", key.replace("_", " "))}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {key.replace("_", " ")}: {value}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -97,7 +113,13 @@ const Dashboard = () => {
                 <h3>Blood Bank Availability</h3>
                 <ul>
                   {Object.entries(hospital.blood_bank).map(([key, value]) => (
-                    <li key={key} onClick={handleRedirect}>{key.replace("_", " ")}: {value}</li>
+                    <li
+                      key={key}
+                      onClick={() => handleBooking(hospital.name, "Blood Units", key.replace("_", " "))}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {key.replace("_", " ")}: {value}
+                    </li>
                   ))}
                 </ul>
               </div>
