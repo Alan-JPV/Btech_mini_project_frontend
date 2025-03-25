@@ -19,19 +19,32 @@ const Dashboard = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/api/central-data", {
+        const response = await axios.get("http://localhost:5000/api/central", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         setHospitals(response.data);
       } catch (error) {
         console.error("Error fetching hospital data:", error.response?.data || error.message);
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          navigate("/login"); // Redirect to login on auth failure
+        }
       } finally {
         setLoading(false);
       }
     };
 
+    // Fetch data immediately on mount
     fetchHospitalData();
+
+    // Set up polling every 1 second
+    const intervalId = setInterval(() => {
+      fetchHospitalData();
+      console.log("Dashboard refreshed at:", new Date().toLocaleTimeString());
+    }, 1000); // 1000 milliseconds = 1 second
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
   }, [navigate]);
 
   const toggleSection = (hospitalId, section) => {
@@ -61,15 +74,15 @@ const Dashboard = () => {
             <div className="grid">
               <div className="stat green" onClick={() => toggleSection(hospital._id, "beds")}>
                 <h3>Available Beds</h3>
-                <p>{Object.values(hospital.beds).reduce((a, b) => a + b, 0)}</p>
+                <p>{Object.values(hospital.beds || {}).reduce((a, b) => a + b, 0)}</p>
               </div>
               <div className="stat blue" onClick={() => toggleSection(hospital._id, "equipment")}>
                 <h3>Equipment Ready</h3>
-                <p>{Object.values(hospital.equipment).reduce((a, b) => a + b, 0)}</p>
+                <p>{Object.values(hospital.equipment || {}).reduce((a, b) => a + b, 0)}</p>
               </div>
               <div className="stat red" onClick={() => toggleSection(hospital._id, "blood_bank")}>
                 <h3>Blood Units</h3>
-                <p>{Object.values(hospital.blood_bank).reduce((a, b) => a + b, 0)}</p>
+                <p>{Object.values(hospital.blood_bank || {}).reduce((a, b) => a + b, 0)}</p>
               </div>
             </div>
             <p className="updated-time">Last Updated: {new Date(hospital.last_updated).toLocaleString()}</p>
@@ -78,7 +91,7 @@ const Dashboard = () => {
               <div className="details-section">
                 <h3>Bed Availability</h3>
                 <ul>
-                  {Object.entries(hospital.beds).map(([key, value]) => (
+                  {Object.entries(hospital.beds || {}).map(([key, value]) => (
                     <li
                       key={key}
                       onClick={() => handleTransfer(hospital.name, key.replace("_", " "))}
@@ -95,7 +108,7 @@ const Dashboard = () => {
               <div className="details-section">
                 <h3>Equipment Status</h3>
                 <ul>
-                  {Object.entries(hospital.equipment).map(([key, value]) => (
+                  {Object.entries(hospital.equipment || {}).map(([key, value]) => (
                     <li
                       key={key}
                       onClick={() => handleBooking(hospital.name, "Equipment Ready", key.replace("_", " "))}
@@ -112,7 +125,7 @@ const Dashboard = () => {
               <div className="details-section">
                 <h3>Blood Bank Availability</h3>
                 <ul>
-                  {Object.entries(hospital.blood_bank).map(([key, value]) => (
+                  {Object.entries(hospital.blood_bank || {}).map(([key, value]) => (
                     <li
                       key={key}
                       onClick={() => handleBooking(hospital.name, "Blood Units", key.replace("_", " "))}
